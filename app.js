@@ -1,6 +1,9 @@
 var Hapi = require('hapi');
 var mysql= require('mysql');
 var inert = require('inert');
+var vision = require('vision');
+var hbars = require('handlebars');
+
 var portnum = process.env.PORT || 3000;
 
 //'edurekasql.cojajm63r6qf.us-west-2.rds.amazonaws.com'
@@ -21,7 +24,7 @@ dbconnection.connect();
 httpserver.register(inert);
 
 //Vision setup 
-httpserver.register(require('vision'), function(err){
+httpserver.register(vision, function(err){
     if(err){
       throw err;
     }
@@ -30,7 +33,7 @@ httpserver.register(require('vision'), function(err){
 // View engine 
 httpserver.views({
      engines: {
-         html: require('handlebars')
+         html: hbars
      },
      relativeTo: __dirname,
      path: 'templates'
